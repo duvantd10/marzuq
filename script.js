@@ -4,5 +4,6 @@ logistica.addEventListener("logistica")
 
 let option = document.createElement("option")
 
-option.text = "";
+option.text = "Sillas";
 option.value = 1
+
