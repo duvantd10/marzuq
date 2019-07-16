@@ -5,8 +5,9 @@ if (!$connection) {
     echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
     exit;
 }
+$connection->set_charset("UTF8");
 
-$result = mysqli_query($connection, "SELECT  FROM  WHERE nombre = " . $_POST['dato']);
+$result = mysqli_query($connection, "SELECT *  FROM gs_subtype");
 
 mysqli_close($connection);
 
