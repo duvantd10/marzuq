@@ -1,0 +1,19 @@
+<?php
+$connection = mysqli_connect("labugaderiaco.ipagemysql.com", "marzuq", "GS-m10sue.87SED", "gs_marzuq" );
+
+if (!$connection) {
+    echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
+    exit;
+}
+
+$result = mysqli_query($connection, "SELECT  FROM  WHERE nombre = " . $_POST['dato']);
+
+mysqli_close($connection);
+
+$rows = array();
+
+while($r = mysqli_fetch_assoc($result)) {
+    $rows[] = $r;
+}
+echo json_encode($rows);
+?>
