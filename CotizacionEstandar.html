@@ -10,7 +10,14 @@
     .columns4{width: 24.5%;display: inline-block;}
     .columns40{width:39.5%;display: inline-block;}
     .columns20{width:19.5%;display: inline-block;}
+    .columns2{ width: 48.5%;display: inline-block;}
+    .w90{width: 90%}.w80{width: 80%}.w70{width: 70%}.w60{width: 60%}.w50{width: 50%}.w40{width: 40%}.w30{width: 30%}.w20{width: 20%}.w10{width: 10%}.w0{width: initial}
+    .logo{height: 7em;}
+    .icon{width:1.2em;}
 
+    .desaparcer{display: none;}    
+    .middle{vertical-align:middle}   
+    .right{text-align: right}.center{text-align: center}.left{text-align: left}
     .container{width: 100%; padding: 0 1em}
     .line{display: inline-block;}.middle{vertical-align:middle}.bottom{vertical-align: bottom}.top{vertical-align: top }
     .right, .left, .center{text-align: center}
@@ -31,9 +38,11 @@
             <div>
                 <h3 data-type="logística y mobiliario" class="br"> 1. Logística y mobiliario</h3> 
                 <div>
-                    <select  id="Subtype" class="margin"></select>
+                    <select class=" middle" name="Subtype" class="margin"></select>
+                    <img onclick="" id="button" class="icon middle" src="img/plus.png">
+                    <img id="" class="icon middle" src="img/minus.png">
                 </div>
-                <div>
+                <div id="form" class="">
                     <select data-sub2type="" class="columns40 margin"></select>
                     <input data-sub2type="" type="text"class="columns20 margin" placeholder="Unidades">                 
                     <input data-sub2type="" type="text"class="columns20 margin" placeholder="$0">
@@ -64,7 +73,7 @@
                     <p data-sub2type="" class="columns20">$0 </p>
                 </div>
                 <div>
-                        <select  data-subtype="" class="margin"></select>
+                        <select name="Subtype" class="margin"></select>
                     </div>
                     <div>
                         <select data-sub2type="" class="columns40 margin"></select>
@@ -97,7 +106,7 @@
                         <p data-sub2type="" class="columns20">$0 </p>
                     </div>
                     <div>
-                        <select  data-subtype="" class="margin"></select>
+                        <select name="Subtype" class="margin"></select>
                     </div>
                     <div>
                         <select data-sub2type="" class="columns40 margin"></select>
@@ -130,7 +139,7 @@
                         <p data-sub2type="" class="columns20">$0 </p>
                     </div>
                     <div>
-                        <select  data-subtype="" class="margin"></select>
+                        <select  name="Subtype" class="margin"></select>
                     </div>
                     <div>
                         <select data-sub2type="" class="columns40 margin"></select>
@@ -163,7 +172,7 @@
                         <p data-sub2type="" class="columns20">$0 </p>
                     </div>
                     <div>
-                            <select  data-subtype="" class="margin"></select>
+                            <select  name="Subtype" class="margin"></select>
                         </div>
                         <div>
                             <select data-sub2type="" class="columns40 margin"></select>
@@ -1404,27 +1413,32 @@
 </body>
 </html>
 <script>
-const Subtype = document.getElementById("Subtype")
+    
+    const Subtype = document.getElementsByName("Subtype")
 
+    function tipo () {
+      const  peticionAJAX = new XMLHttpRequest()
+      peticionAJAX.open("POST", "Logistica.php",true)
+      
+      peticionAJAX.onreadystatechange = function() {
 
-function traerDatos(){
-    let peticionAjax = new XMLHttpRequest()
-    peticionAjax.open("POST", "Logistica.php", true)
+        if(this.status == 200 && this.readyState == 4){
+            const hola= JSON.parse(this.response)
+            Subtype.forEach(logi => { 
 
-    peticionAjax.onreadystatechange = function(){
-        if (this.readyState == 4 && this.status == 200 ) {
-            const dato = JSON.parse(this.response)
-            for (let index = 0; index < dato.length; index++) {
-                if (dato[index].id_type == 1) {
+                hola.forEach(saludo => {
+                if(saludo.id_type == 1){
                     const option = document.createElement("option")
-                option.text = dato[index].name_subtype
-                Subtype.add(option)
+                    option.text = saludo.name_subtype
+                    logi.add(option)
                 }
+            })
+                
+            });
 
-            }
         }
+      }
+      peticionAJAX.send()
     }
-    peticionAjax.send()   
-}
-traerDatos()
+    tipo()
 </script>
